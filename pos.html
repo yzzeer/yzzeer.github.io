@@ -1,0 +1,36 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+		body, html{width: 100%;height: 100%;margin:0;}
+		#allmap {width:100%;height:100%;}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=8Y5oHHIvllKRPAzaHgbd7oyF"></script>
+  <script type="text/javascript">//请换成你的ak值</script>
+	<title>点击地图获取经纬度和地址</title>
+</head>
+<body>
+	<div id="allmap"></div>
+  
+<script type="text/javascript">
+	// 百度地图API功能
+	var map = new BMap.Map("allmap");
+	var point = new BMap.Point(112.594217,37.8666582);
+  var top_right_navigation = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL});
+	map.centerAndZoom(point,13);
+  map.addControl(top_right_navigation);
+  map.enableScrollWheelZoom(true);
+  var geoc = new BMap.Geocoder();    
+
+	map.addEventListener("click", function(e){
+		var pt = e.point;
+		geoc.getLocation(pt, function(rs){
+			var addComp = rs.addressComponents;
+			alert("经度："+pt.lng+", 纬度："+pt.lat+"；"+addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+		});        
+	});
+</script>
+
+</body>
+</html>
